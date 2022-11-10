@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,8 +52,21 @@ public class AStarState
         }
         return (Waypoint) minEntry;
 
-         */
+
         return openWaypoints.values().stream().min(Comparator.comparing(Waypoint::getTotalCost)).get();
+         */
+        if (openWaypoints.size() == 0)
+            return null;
+        float minCost = Float.MAX_VALUE;
+        Location location = null;
+        for (Location loc : openWaypoints.keySet()) {
+            float currentValueOfcCost = openWaypoints.get(loc).getTotalCost();
+            if (currentValueOfcCost < minCost) {
+                minCost = currentValueOfcCost;
+                location = loc;
+            }
+        }
+        return openWaypoints.get(location);
     }
 
     /**
@@ -76,9 +87,9 @@ public class AStarState
                 return true;
             }
         }
-            else {
-                openWaypoints.put(newWP.getLocation(), newWP);
-            }
+        else {
+            openWaypoints.put(newWP.getLocation(), newWP);
+        }
         return false;
     }
 
@@ -87,11 +98,7 @@ public class AStarState
     public int numOpenWaypoints()
     {
         // TODO:  Implement.
-        int count = 0;
-        for (Location key : openWaypoints.keySet()) {
-            count += 1;
-        }
-        return count;
+        return openWaypoints.size();
     }
 
 

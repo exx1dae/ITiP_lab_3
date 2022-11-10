@@ -1,4 +1,4 @@
-
+import java.util.Objects;
 
 /**
  * This class represents a specific location in a 2D map.  Coordinates are
@@ -37,6 +37,6 @@ public class Location
 
     @Override
     public int hashCode() {
-        return xCoord + yCoord;
+        return Objects.hash(xCoord, yCoord);
     }
 }
